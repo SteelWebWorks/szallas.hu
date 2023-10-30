@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,10 +13,18 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::controller(CompanyController::class)->group(function () {
+    Route::get('/companies', 'index')->name('companies.index');
+    Route::get('/companies/{id}', 'show')->name('companies.show');
+    Route::post('companies/', 'store')->name('companies.store');
+    Route::put('companies/{company}', 'update')->name('companies.update');
+    Route::delete('/companies/{company}', 'destroy')->name('companies.destroy');
 });
 
 Route::get('/dashboard', function () {
@@ -28,4 +37,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
