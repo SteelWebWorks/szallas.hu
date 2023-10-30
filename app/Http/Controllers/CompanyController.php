@@ -53,7 +53,7 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        $company->update($request->validated());
+        $company->update($request->all());
         return response()->json([
             'data' => $company,
         ], 200);
