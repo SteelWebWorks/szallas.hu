@@ -19,9 +19,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::fallback(function () {
+    return response()->json([
+        'message' => 'Page Not Found. If error persists, contact zsigmondgbalazs@gmail.com'], 404);
+});
+
 Route::controller(CompanyController::class)->group(function () {
     Route::get('/companies', 'index')->name('companies.index');
-    Route::get('/companies/{id}', 'show')->name('companies.show');
+    Route::get('/companies/{company}', 'show')->name('companies.show');
     Route::post('companies/', 'store')->name('companies.store');
     Route::put('companies/{company}', 'update')->name('companies.update');
     Route::delete('/companies/{company}', 'destroy')->name('companies.destroy');

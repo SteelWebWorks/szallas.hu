@@ -2,9 +2,7 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Request;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -25,17 +23,8 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $exception, Request $request) {
-            if ($request->is('api/*')) {
-                if ($exception instanceof AuthenticationException) {
-                    return $request->expectsJson() ?:
-                    response()->json([
-                        'message' => 'Authentication Failed',
-                        'status' => 401,
-                        'Description' => 'Missing or invalid Access Token',
-                    ]);
-                }
-            }
+        $this->reportable(function (Throwable $exception) {
+
         });
     }
 }
